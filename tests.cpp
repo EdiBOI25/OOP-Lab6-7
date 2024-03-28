@@ -2,8 +2,16 @@
 
 #include "subject.h"
 #include "repository.h"
+#include "service.h"
 
 void test_domain() {
+	Subject empty_subject;
+	
+	assert(std::empty(empty_subject.getName()));
+	assert(empty_subject.getHours() == 0);
+	assert(std::empty(empty_subject.getType()));
+	assert(std::empty(empty_subject.getTeacher()));
+
 	Subject maths("math", 5, "compulsory", "some dude");
 
 	assert(maths.getName() == "math");
@@ -19,6 +27,8 @@ void test_domain() {
 	assert(maths.getTeacher() == "other dude");
 	maths.setType("optional");
 	assert(maths.getType() == "optional");
+
+	
 }
 
 void test_repository() {
@@ -29,4 +39,21 @@ void test_repository() {
 	repo.add(Subject("physics", 4, "compulsory", "another dude"));
 
 	assert(repo.size() == 3);
+
+	std::vector<Subject> subjects = repo.getAll();
+	assert(subjects[0].getName() == "math");
+}
+
+void test_service() {
+	Repository repo;
+	Service service(repo);
+
+	service.add(Subject("math", 5, "compulsory", "some dude"));
+	service.add(Subject("english", 3, "optional", "other dude"));
+	service.add(Subject("physics", 4, "compulsory", "another dude"));
+
+	assert(service.size() == 3);
+
+	std::vector<Subject> subjects = service.getAll();
+	assert(subjects[0].getName() == "math");
 }

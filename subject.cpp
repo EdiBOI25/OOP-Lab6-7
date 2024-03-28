@@ -1,6 +1,8 @@
 ﻿#include "subject.h"
 
-Subject::Subject(const std::string& name, const int& hours_per_week, const std::string& type, const std::string& teacher) {
+#include <fstream>
+
+Subject::Subject(const string& name, const int& hours_per_week, const string& type, const string& teacher) {
 	this->name = name;
 	this->hours_per_week = hours_per_week;
 	this->type = type;
@@ -11,7 +13,7 @@ Subject::Subject(const std::string& name, const int& hours_per_week, const std::
 //	// destructor
 //}
 
-std::string Subject::getName() const {
+string Subject::getName() const {
 	return this->name;
 }
 
@@ -19,15 +21,15 @@ int Subject::getHours() const {
 	return this->hours_per_week;
 }
 
-std::string Subject::getType() const {
+string Subject::getType() const {
 	return this->type;
 }
 
-std::string Subject::getTeacher() const {
+string Subject::getTeacher() const {
 	return this->teacher;
 }
 
-void Subject::setName(const std::string& new_name) {
+void Subject::setName(const string& new_name) {
 	this->name = new_name;
 }
 
@@ -35,10 +37,16 @@ void Subject::setHours(const int& new_hours) {
 	this->hours_per_week = new_hours;
 }
 
-void Subject::setType(const std::string& new_type) {
+void Subject::setType(const string& new_type) {
 	this->type = new_type;
 }
 
-void Subject::setTeacher(const std::string& new_teacher) {
+void Subject::setTeacher(const string& new_teacher) {
 	this->teacher = new_teacher;
+}
+
+std::ostream& operator<<(std::ostream& out, const Subject& subject)
+{
+	out << "Name: " << subject.getName() << "\tHours per week: " << subject.getHours() << "\tType: " << subject.getType() << "\tTeacher: " << subject.getTeacher() << "\n";
+	return out;
 }

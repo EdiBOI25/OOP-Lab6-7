@@ -130,11 +130,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="repository.cpp" />
+    <ClCompile Include="service.cpp" />
     <ClCompile Include="subject.cpp" />
     <ClCompile Include="tests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="repository.h" />
+    <ClInclude Include="service.h" />
     <ClInclude Include="subject.h" />
     <ClInclude Include="tests.h" />
   </ItemGroup>
