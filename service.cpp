@@ -21,6 +21,14 @@ size_t Service::size() const {
 
 int Service::findSubject(const string& name, const int& hours, const string& type, const string& teacher) const {
 	const Subject subject{ name, hours, type, teacher };
-	std::cout << subject << '\n';
 	return this->repo.find(subject);
+}
+
+void Service::removeSubject(const int& index) {
+	this->repo.remove(index);
+}
+
+void Service::updateSubject(const int& index, const string& name, const int& hours, const string& type, const string& teacher) {
+	const Subject subject{ name, hours, type, teacher };
+	this->repo.update(index, subject);
 }

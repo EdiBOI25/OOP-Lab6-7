@@ -47,6 +47,41 @@ public:
 	}
 
 	/**
+	 * \brief Removes an element from the list
+	 * \param element element to remove
+	 */
+	void remove(const Element& element) {
+		int index = this->find(element);
+		if (index == -1) {
+			return;
+		}
+		this->list.erase(this->list.begin() + index);
+	}
+
+	/**
+	 * \brief Removes an element found at given index
+	 * \param index index of element to remove
+	 */
+	void remove(const int& index) {
+		if (index < 0 || index >= this->list.size()) {
+			return;
+		}
+		this->list.erase(this->list.begin() + index);
+	}
+
+	/**
+	 * \brief Replaces element found at given index with a new one
+	 * \param index position to update element
+	 * \param element element to replace the old one with
+	 */
+	void update(const int& index, const Element& element) {
+		if (index < 0 || index >= this->list.size()) {
+			return;
+		}
+		this->list[index] = element;
+	}
+
+	/**
 	 * \brief Returns the size of the repository list
 	 * \return size of repository list
 	 */

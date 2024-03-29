@@ -54,6 +54,18 @@ void test_repository() {
 
 	assert(repo.find(ceva) == 1);
 	assert(repo.find(Subject("aksjdh", 10, "kasjdh", "sjhrgb")) == -1);
+
+	Subject new_s = Subject("aaaa", 10, "aa", "asdasd");
+	repo.update(100, new_s);
+	repo.update(0, new_s);
+	assert(repo[0].getName() == "aaaa");
+
+	repo.remove(10);
+	assert(repo.size() == 3);
+	repo.remove(ceva);
+	assert(repo.size() == 2);
+	repo.remove(1);
+	assert(repo.size() == 1);
 }
 
 void test_service() {
@@ -70,4 +82,13 @@ void test_service() {
 
 	assert(service.findSubject("english", 3, "optional", "other dude") == 1);
 	assert(service.findSubject("skfdjhg", 3, "optional", "other dude") == -1);
+
+	service.updateSubject(100, "aaaa", 10, "aa", "asdasd");
+	service.updateSubject(0, "aaaa", 10, "aa", "asdasd");
+	assert(service.getAll()[0].getName() == "aaaa");
+
+	service.removeSubject(10);
+	assert(service.size() == 3);
+	service.removeSubject(1);
+	assert(service.size() == 2);
 }

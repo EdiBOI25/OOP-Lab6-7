@@ -9,6 +9,8 @@ private:
 		"-------------------\n"
 		"1. Add subject\n"
 		"2. Find subject\n"
+		"3. Remove subject\n"
+		"4. Edit subject\n"
 		"9. Print all subjects\n"
 	};
 
@@ -29,6 +31,10 @@ private:
 	void addSubject();
 
 	void findSubject();
+
+	void removeSubject();
+
+	void updateSubject();
 
 	void printAllSubjects();
 

@@ -47,14 +47,31 @@ void UI::findSubject() {
 	std::cout << "Subject found at position " << pos << '\n';
 }
 
+void UI::removeSubject() {
+	this->printAllSubjects();
+	const int index{ readInteger("Index of subject to remove: ") };
+	this->service.removeSubject(index);
+}
+
+void UI::updateSubject() {
+	this->printAllSubjects();
+	const int index{ readInteger("Index of subject to update: ") };
+	const string name{ readString("New name: ") };
+	const int hours_per_week{ readInteger("New number of hours per week: ") };
+	const string type{ readString("New type: ") };
+	const string teacher{ readString("New teacher's name: ") };
+
+	this->service.updateSubject(index, name, hours_per_week, type, teacher);
+}
+
 void UI::printAllSubjects() {
 	if (this->service.size() == 0) {
 		cout << "No subjects to print\n";
 		return;
 	}
 	const vector<Subject> subjects = this->service.getAll();
-	for (const auto& subject : subjects) {
-				cout << subject << '\n';
+	for (size_t i = 0; i < subjects.size(); ++i) {
+				cout << i << ": " << subjects[i] << '\n';
 	}
 }
 
@@ -71,6 +88,12 @@ void UI::run() {
 			break;
 		case 2:
 			this->findSubject();
+			break;
+		case 3:
+			this->removeSubject();
+			break;
+		case 4:
+			this->updateSubject();
 			break;
 		case 9:
 			this->printAllSubjects();
