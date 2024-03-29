@@ -11,6 +11,7 @@ private:
 	string teacher{};
 
 public:
+	// Constructor for empty subject
 	Subject() = default;
 
 	/**

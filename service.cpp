@@ -8,7 +8,8 @@ std::vector<Subject> Service::getAll() const {
 	return this->repo.getAll();
 }
 
-void Service::add(const Subject& subject) {
+void Service::addSubject(const string& name, const int& hours, const string& type, const string& teacher) {
+	const Subject subject{ name, hours, type, teacher };
 	this->repo.add(subject);
 }
 

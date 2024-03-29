@@ -1,4 +1,5 @@
 ﻿#include <cassert>
+#include <iostream>
 
 #include "subject.h"
 #include "repository.h"
@@ -12,7 +13,7 @@ void test_domain() {
 	assert(std::empty(empty_subject.getType()));
 	assert(std::empty(empty_subject.getTeacher()));
 
-	Subject maths("math", 5, "compulsory", "some dude");
+	Subject maths{ "math", 5, "compulsory", "some dude" };
 
 	assert(maths.getName() == "math");
 	assert(maths.getHours() == 5);
@@ -28,7 +29,7 @@ void test_domain() {
 	maths.setType("optional");
 	assert(maths.getType() == "optional");
 
-	
+	std::cout << maths << '\n';
 }
 
 void test_repository() {
@@ -48,9 +49,9 @@ void test_service() {
 	Repository repo;
 	Service service(repo);
 
-	service.add(Subject("math", 5, "compulsory", "some dude"));
-	service.add(Subject("english", 3, "optional", "other dude"));
-	service.add(Subject("physics", 4, "compulsory", "another dude"));
+	service.addSubject("math", 5, "compulsory", "some dude");
+	service.addSubject("english", 3, "optional", "other dude");
+	service.addSubject("physics", 4, "compulsory", "another dude");
 
 	assert(service.size() == 3);
 

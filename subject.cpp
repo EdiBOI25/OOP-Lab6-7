@@ -47,6 +47,6 @@ void Subject::setTeacher(const string& new_teacher) {
 
 std::ostream& operator<<(std::ostream& out, const Subject& subject)
 {
-	out << "Name: " << subject.getName() << "\tHours per week: " << subject.getHours() << "\tType: " << subject.getType() << "\tTeacher: " << subject.getTeacher() << "\n";
+	out << "Name: " << subject.name << "\tHours per week: " << subject.hours_per_week << "\tType: " << subject.type << "\tTeacher: " << subject.teacher;
 	return out;
 }
