@@ -2,6 +2,8 @@
 #include "tests.h"
 #include "UI.h"
 
+// TODO: find subject, update subject, delete subject
+
 int main()
 {
     test_domain();

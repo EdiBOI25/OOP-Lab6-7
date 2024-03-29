@@ -39,4 +39,6 @@ public:
 	 * \return number of elements in list
 	 */
 	size_t size() const;
+
+	int findSubject(const string& name, const int& hours, const string& type, const string& teacher) const;
 };

@@ -8,6 +8,7 @@ private:
 		"Study contract menu\n"
 		"-------------------\n"
 		"1. Add subject\n"
+		"2. Find subject\n"
 		"9. Print all subjects\n"
 	};
 
@@ -26,6 +27,8 @@ private:
 	string readString(const string& message) const;
 
 	void addSubject();
+
+	void findSubject();
 
 	void printAllSubjects();
 

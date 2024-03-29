@@ -49,3 +49,37 @@ std::ostream& operator<<(std::ostream& out, const Subject& subject) {
 	out << "Name: " << subject.name << "\tHours per week: " << subject.hours_per_week << "\tType: " << subject.type << "\tTeacher: " << subject.teacher;
 	return out;
 }
+
+bool Subject::operator==(const Subject& other) const {
+	if (this->name != other.name) {
+		return false;
+	}
+	if (this->hours_per_week != other.hours_per_week) {
+		return false;
+	}
+	if (this->type != other.type) {
+		return false;
+	}
+	if (this->teacher != other.teacher) {
+		return false;
+	}
+
+	return true;
+}
+
+bool Subject::operator!=(const Subject& other) const {
+	if (this->name != other.name) {
+		return true;
+	}
+	if (this->hours_per_week != other.hours_per_week) {
+		return true;
+	}
+	if (this->type != other.type) {
+		return true;
+	}
+	if (this->teacher != other.teacher) {
+		return true;
+	}
+
+	return false;
+}

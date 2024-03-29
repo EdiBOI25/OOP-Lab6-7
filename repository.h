@@ -31,6 +31,21 @@ public:
 		this->list.push_back(element);
 	}
 
+
+	/**
+	 * \brief Returns the first foun position of the element in the list
+	 * \param element element to search for
+	 * \return position of first found element or -1 if not found
+	 */
+	int find(const Element& element) const {
+		for (int i = 0; i < this->list.size(); i++) {
+			if (this->list[i] == element) {
+				return i;
+			}
+		}
+		return  -1;
+	}
+
 	/**
 	 * \brief Returns the size of the repository list
 	 * \return size of repository list

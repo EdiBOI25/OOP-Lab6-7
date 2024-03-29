@@ -29,7 +29,12 @@ void test_domain() {
 	maths.setType("optional");
 	assert(maths.getType() == "optional");
 
+	Subject maths2{ "math2", 10, "optional", "other dude" };
+	Subject maths3{ "math", 10, "compulsory", "some dude" };
 	std::cout << maths << '\n';
+
+	assert(maths == maths2);
+	assert(maths != maths3);
 }
 
 void test_repository() {
@@ -46,8 +51,9 @@ void test_repository() {
 
 	Element ceva = repo[1];
 	assert(ceva.getHours() == 3);
-	ceva.setHours(10);
-	assert(ceva.getHours() == 10);
+
+	assert(repo.find(ceva) == 1);
+	assert(repo.find(Subject("aksjdh", 10, "kasjdh", "sjhrgb")) == -1);
 }
 
 void test_service() {
@@ -61,4 +67,7 @@ void test_service() {
 
 	std::vector<Subject> subjects = service.getAll();
 	assert(subjects[0].getName() == "math");
+
+	assert(service.findSubject("english", 3, "optional", "other dude") == 1);
+	assert(service.findSubject("skfdjhg", 3, "optional", "other dude") == -1);
 }

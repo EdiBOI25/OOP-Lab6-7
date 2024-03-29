@@ -1,5 +1,7 @@
 ﻿#include "service.h"
 
+#include <iostream>
+
 Service::Service(const Repository& repo) {
 	this->repo = repo;
 }
@@ -15,4 +17,10 @@ void Service::addSubject(const string& name, const int& hours, const string& typ
 
 size_t Service::size() const {
 	return this->repo.size();
+}
+
+int Service::findSubject(const string& name, const int& hours, const string& type, const string& teacher) const {
+	const Subject subject{ name, hours, type, teacher };
+	std::cout << subject << '\n';
+	return this->repo.find(subject);
 }

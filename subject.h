@@ -74,4 +74,8 @@ public:
 	void setTeacher(const string& new_teacher);
 
 	friend std::ostream& operator << (std::ostream& out, const Subject& subject);
+
+	bool operator==(const Subject& other) const;
+
+	bool operator!=(const Subject& other) const;
 };
