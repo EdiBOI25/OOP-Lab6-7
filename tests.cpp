@@ -43,11 +43,15 @@ void test_repository() {
 
 	std::vector<Subject> subjects = repo.getAll();
 	assert(subjects[0].getName() == "math");
+
+	Element ceva = repo[1];
+	assert(ceva.getHours() == 3);
+	ceva.setHours(10);
+	assert(ceva.getHours() == 10);
 }
 
 void test_service() {
-	Repository repo;
-	Service service(repo);
+	Service service;
 
 	service.addSubject("math", 5, "compulsory", "some dude");
 	service.addSubject("english", 3, "optional", "other dude");

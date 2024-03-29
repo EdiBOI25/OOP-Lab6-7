@@ -38,4 +38,9 @@ public:
 	size_t size() const {
 		return this->list.size();
 	}
+
+	Element& operator[](const size_t& index) {
+		// if (index < 0 || index >= this->list.size())
+		return this->list[index];
+	}
 };

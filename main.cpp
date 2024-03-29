@@ -7,6 +7,7 @@ int main()
     test_domain();
     test_repository();
     test_service();
+    // system("cls");
 
     // Adding random subjects
     Repository repo{};
