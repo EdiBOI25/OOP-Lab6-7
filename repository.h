@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <iostream>
 #include <vector>
 #include "subject.h"
 
@@ -11,16 +12,16 @@ public:
 	/**
 	 * \brief Repository constructor
 	 */
-	Repository() {
-		this->list = {};
+	Repository() noexcept{
+		this->list = std::vector<Element>{};
 	}
 
 	/**
 	 * \brief Returns the list of elements in repository
 	 * \return list of elements in repository
 	 */
-	std::vector<Element> getAll() const {
-		return this->list;
+	const std::vector<Element>* getAll() const noexcept{
+		return &this->list;
 	}
 
 	/**
@@ -39,7 +40,7 @@ public:
 	 */
 	int find(const Element& element) const {
 		for (int i = 0; i < this->list.size(); i++) {
-			if (this->list[i] == element) {
+			if (this->list.at(i) == element) {
 				return i;
 			}
 		}
@@ -51,7 +52,7 @@ public:
 	 * \param element element to remove
 	 */
 	void remove(const Element& element) {
-		int index = this->find(element);
+		const int index = this->find(element);
 		if (index == -1) {
 			return;
 		}
@@ -78,19 +79,26 @@ public:
 		if (index < 0 || index >= this->list.size()) {
 			return;
 		}
-		this->list[index] = element;
+		this->list.at(index) = element;
 	}
 
 	/**
 	 * \brief Returns the size of the repository list
 	 * \return size of repository list
 	 */
-	size_t size() const {
+	size_t size() const noexcept{
 		return this->list.size();
 	}
 
-	Element& operator[](const size_t& index) {
+	Element& operator[](const size_t& index){
 		// if (index < 0 || index >= this->list.size())
-		return this->list[index];
+		return this->list.at(index);
+	}
+
+	friend std::ostream& operator<<(std::ostream& out, const Repository& repo) {
+		for(size_t i = 0; i < repo.size(); ++i) {
+			out << repo.list[i] << '\n';
+		}
+		return out;
 	}
 };

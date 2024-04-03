@@ -35,6 +35,9 @@ void test_domain() {
 
 	assert(maths == maths2);
 	assert(maths != maths3);
+
+	Subject math_copy = maths2;
+	assert(math_copy == maths2);
 }
 
 void test_repository() {
@@ -46,7 +49,8 @@ void test_repository() {
 
 	assert(repo.size() == 3);
 
-	std::vector<Subject> subjects = repo.getAll();
+	const std::vector<Subject> subjects = *repo.getAll();
+	std::cout << subjects[0];
 	assert(subjects[0].getName() == "math");
 
 	Element ceva = repo[1];
@@ -61,6 +65,8 @@ void test_repository() {
 	assert(repo[0].getName() == "aaaa");
 
 	repo.remove(10);
+	assert(repo.size() == 3);
+	repo.remove(Subject("surjfskjrf", 50, "sjfh", "ksjdfh"));
 	assert(repo.size() == 3);
 	repo.remove(ceva);
 	assert(repo.size() == 2);
@@ -77,15 +83,15 @@ void test_service() {
 
 	assert(service.size() == 3);
 
-	std::vector<Subject> subjects = service.getAll();
-	assert(subjects[0].getName() == "math");
+	const std::vector<Subject> subjects = *service.getAll();
+	assert(subjects.at(0).getName() == "math");
 
 	assert(service.findSubject("english", 3, "optional", "other dude") == 1);
 	assert(service.findSubject("skfdjhg", 3, "optional", "other dude") == -1);
 
 	service.updateSubject(100, "aaaa", 10, "aa", "asdasd");
 	service.updateSubject(0, "aaaa", 10, "aa", "asdasd");
-	assert(service.getAll()[0].getName() == "aaaa");
+	assert(service.getAll()->at(0).getName() == "aaaa");
 
 	service.removeSubject(10);
 	assert(service.size() == 3);

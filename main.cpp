@@ -9,7 +9,6 @@ int main()
     test_domain();
     test_repository();
     test_service();
-    // system("cls");
 
     // Adding random subjects
     Repository repo{};
@@ -19,8 +18,8 @@ int main()
     repo.add(Subject("default2", 10, "other", "yet another dude"));
 
     UI ui{Service(repo)};
+    system("cls");
     ui.run();
 
     return 0;
 }
-

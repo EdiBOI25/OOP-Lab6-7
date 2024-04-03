@@ -1,12 +1,21 @@
 ﻿#include "subject.h"
 
 #include <fstream>
+#include <iostream>
 
 Subject::Subject(const string& name, const int& hours_per_week, const string& type, const string& teacher) {
 	this->name = name;
 	this->hours_per_week = hours_per_week;
 	this->type = type;
 	this->teacher = teacher;
+}
+
+Subject::Subject(const Subject& s) {
+	this->name = s.name;
+	this->hours_per_week = s.hours_per_week;
+	this->type = s.type;
+	this->teacher = s.teacher;
+	std::cout << "subiectul s-a copiat\n";
 }
 
 //Subject::~Subject() {
@@ -17,7 +26,7 @@ string Subject::getName() const {
 	return this->name;
 }
 
-int Subject::getHours() const {
+int Subject::getHours() const noexcept{
 	return this->hours_per_week;
 }
 
@@ -33,7 +42,7 @@ void Subject::setName(const string& new_name) {
 	this->name = new_name;
 }
 
-void Subject::setHours(const int& new_hours) {
+void Subject::setHours(const int& new_hours) noexcept{
 	this->hours_per_week = new_hours;
 }
 
@@ -50,7 +59,7 @@ std::ostream& operator<<(std::ostream& out, const Subject& subject) {
 	return out;
 }
 
-bool Subject::operator==(const Subject& other) const {
+bool Subject::operator==(const Subject& other) const noexcept{
 	if (this->name != other.name) {
 		return false;
 	}
@@ -67,7 +76,7 @@ bool Subject::operator==(const Subject& other) const {
 	return true;
 }
 
-bool Subject::operator!=(const Subject& other) const {
+bool Subject::operator!=(const Subject& other) const noexcept{
 	if (this->name != other.name) {
 		return true;
 	}

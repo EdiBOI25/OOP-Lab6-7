@@ -24,6 +24,12 @@ public:
 	Subject(const string& name, const int& hours_per_week, const string& type, const string& teacher);
 
 	/**
+	 * \brief Copy constructor
+	 * \param s subject to copy
+	 */
+	Subject(const Subject& s);
+
+	/**
 	 * \brief Subject class destructor
 	 */
 	~Subject() = default;
@@ -38,7 +44,7 @@ public:
 	 * \brief Returns the number of hours per week of the subject
 	 * \return hours per week of subject
 	 */
-	int getHours() const;
+	int getHours() const noexcept;
 
 	/**
 	 * \brief Returns the type of the subject
@@ -61,7 +67,7 @@ public:
 	 * \brief Sets a new number of hours per week
 	 * \param new_hours new number of hours per week
 	 */
-	void setHours(const int& new_hours);
+	void setHours(const int& new_hours) noexcept;
 	/**
 	 * \brief Sets new type of subject
 	 * \param new_type new type to replace the old one
@@ -75,7 +81,7 @@ public:
 
 	friend std::ostream& operator << (std::ostream& out, const Subject& subject);
 
-	bool operator==(const Subject& other) const;
+	bool operator==(const Subject& other) const noexcept;
 
-	bool operator!=(const Subject& other) const;
+	bool operator!=(const Subject& other) const noexcept;
 };

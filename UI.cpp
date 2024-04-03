@@ -4,9 +4,11 @@
 
 using namespace std;
 
-void clearBuffer() {
-	// Aparent, mereu cand se citeste un numar, ramane caracterul '\n' in buffer
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+namespace {
+	void clearBuffer() {
+		// Aparent, mereu cand se citeste un numar, ramane caracterul '\n' in buffer
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	}
 }
 
 int UI::readInteger(const string& message) const {
@@ -39,7 +41,7 @@ void UI::findSubject() {
 	const string type{ readString("Type: ") };
 	const string teacher{ readString("Teacher's name: ") };
 
-	int pos = this->service.findSubject(name, hours_per_week, type, teacher);
+	const int pos = this->service.findSubject(name, hours_per_week, type, teacher);
 	if (pos == -1) {
 		std::cout << "Subject not found\n";
 		return;
@@ -69,10 +71,11 @@ void UI::printAllSubjects() {
 		cout << "No subjects to print\n";
 		return;
 	}
-	const vector<Subject> subjects = this->service.getAll();
+	/*const vector<Subject> subjects = *this->service.getAll();
 	for (size_t i = 0; i < subjects.size(); ++i) {
-				cout << i << ": " << subjects[i] << '\n';
-	}
+				cout << i << ": " << subjects.at(i) << '\n';
+	}*/
+	cout << this->service;
 }
 
 void UI::run() {

@@ -9,7 +9,7 @@ public:
 	/**
 	 * \brief Constructor in case no repository is provided
 	 */
-	Service() {
+	Service() noexcept{
 		this->repo = Repository();
 	}
 
@@ -23,7 +23,7 @@ public:
 	 * \brief Returns all elements in list
 	 * \return list of elements
 	 */
-	std::vector<Subject> getAll() const;
+	const std::vector<Subject>* getAll() const;
 
 	/**
 	 * \brief Adds a subject to the list
@@ -38,7 +38,7 @@ public:
 	 * \brief Returns the number of elements in list
 	 * \return number of elements in list
 	 */
-	size_t size() const;
+	size_t size() const noexcept;
 
 	/**
 	 * \brief Returns the position of a subject in the list
@@ -65,4 +65,6 @@ public:
 	 * \param teacher new teacher name
 	 */
 	void updateSubject(const int& index, const string& name, const int& hours, const string& type, const string& teacher);
+
+	friend std::ostream& operator<<(std::ostream& out, const Service& serv);
 };

@@ -3,7 +3,7 @@
 class UI {
 private:
 	Service service;
-	string main_menu{
+	std::string main_menu{
 		"-------------------\n"
 		"Study contract menu\n"
 		"-------------------\n"
@@ -42,7 +42,7 @@ public:
 	/**
 	 * \brief Default constructor in case service is not provided
 	 */
-	UI() {
+	UI() noexcept{
 		this->service = Service();
 	}
 
