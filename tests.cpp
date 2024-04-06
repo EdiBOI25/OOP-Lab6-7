@@ -132,7 +132,7 @@ void test_service() {
 	try {
 		service.addSubject("physics", 4, "compulsory", "another dude");
 	}
-	catch(std::exception& e) {
+	catch(const std::exception& e) {
 		assert(string(e.what()) == "Subject already exists");
 	}
 
@@ -155,7 +155,7 @@ void test_service() {
 	try {
 		service.updateSubject(0, "aaaa", 10, "aa", "asdasd");
 	}
-	catch (std::exception& e) {
+	catch (const std::exception& e) {
 		assert(string(e.what()) == "Subject already exists");
 	}
 
