@@ -2,7 +2,7 @@
 #include "service.h"
 class UI {
 private:
-	Service service;
+	Service service{};
 	std::string main_menu{
 		"-------------------\n"
 		"Study contract menu\n"
@@ -11,6 +11,8 @@ private:
 		"2. Find subject\n"
 		"3. Remove subject\n"
 		"4. Edit subject\n"
+		"5. Filter subjects\n"
+		"6. Sort subjects\n"
 		"9. Print all subjects\n"
 	};
 
@@ -19,14 +21,14 @@ private:
 	 * \param message message to print
 	 * \return read integer
 	 */
-	int readInteger(const string& message) const;
+	static int readInteger(const string& message);
 
 	/**
 	 * \brief Reads a string from console
 	 * \param message message to print
 	 * \return read string
 	 */
-	string readString(const string& message) const;
+	static string readString(const string& message);
 
 	void addSubject();
 
@@ -36,6 +38,10 @@ private:
 
 	void updateSubject();
 
+	void filterSubjects();
+
+	void sortSubjects();
+
 	void printAllSubjects();
 
 public:
@@ -43,7 +49,11 @@ public:
 	 * \brief Default constructor in case service is not provided
 	 */
 	UI() noexcept{
-		this->service = Service();
+		// Adding random subjects
+		this->service.addSubject("default3", 6, "compulsory", "some dude");
+		this->service.addSubject("default1", 2, "optional", "other dude");
+		this->service.addSubject("default4", 5, "compulsory", "some other dude");
+		this->service.addSubject("default2", 10, "other", "yet another dude");
 	}
 
 	/**
@@ -53,6 +63,8 @@ public:
 	UI(const Service& service) {
 		this->service = service;
 	}
+
+	~UI() = default;
 
 	/**
 	 * \brief Runs the UI (main menu)

@@ -1,26 +1,31 @@
 ﻿#pragma once
 #include <iostream>
 #include <vector>
+#include "DynamicArray.h"
 #include "subject.h"
 
 typedef Subject Element;
 
 class Repository {
 private:
-	std::vector<Element> list{};
+	//std::vector<Element> list{};
+	DynamicArray<Element> list{10};
 public:
 	/**
 	 * \brief Repository constructor
 	 */
-	Repository() noexcept{
-		this->list = std::vector<Element>{};
-	}
+	Repository() = default;
+
+	/**
+	 * \brief Repository deconstructor
+	 */
+	~Repository() = default;
 
 	/**
 	 * \brief Returns the list of elements in repository
 	 * \return list of elements in repository
 	 */
-	const std::vector<Element>* getAll() const noexcept{
+	const DynamicArray<Element>* getAll() const noexcept{
 		return &this->list;
 	}
 
@@ -54,20 +59,20 @@ public:
 	void remove(const Element& element) {
 		const int index = this->find(element);
 		if (index == -1) {
-			return;
+			throw std::exception("Couldn't find element to remove");
 		}
-		this->list.erase(this->list.begin() + index);
+		this->list.erase(index);
 	}
 
 	/**
 	 * \brief Removes an element found at given index
 	 * \param index index of element to remove
 	 */
-	void remove(const int& index) {
+	void remove(const size_t& index) {
 		if (index < 0 || index >= this->list.size()) {
-			return;
+			throw std::out_of_range("Index out of range");
 		}
-		this->list.erase(this->list.begin() + index);
+		this->list.erase(index);
 	}
 
 	/**
@@ -75,9 +80,9 @@ public:
 	 * \param index position to update element
 	 * \param element element to replace the old one with
 	 */
-	void update(const int& index, const Element& element) {
+	void update(const int& index, const Element& element) const {
 		if (index < 0 || index >= this->list.size()) {
-			return;
+			throw std::out_of_range("Index out of range");
 		}
 		this->list.at(index) = element;
 	}
@@ -90,14 +95,14 @@ public:
 		return this->list.size();
 	}
 
-	Element& operator[](const size_t& index){
+	Element& operator[](const int& index) const {
 		// if (index < 0 || index >= this->list.size())
 		return this->list.at(index);
 	}
 
 	friend std::ostream& operator<<(std::ostream& out, const Repository& repo) {
-		for(size_t i = 0; i < repo.size(); ++i) {
-			out << repo.list[i] << '\n';
+		for(int i = 0; i < repo.size(); ++i) {
+			out << i << ": " << repo.list.at(i) << '\n';
 		}
 		return out;
 	}

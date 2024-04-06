@@ -1,29 +1,31 @@
 ﻿#pragma once
+#include <functional>
+
 #include "repository.h"
 
 class Service {
 private:
-	Repository repo;
+	Repository repo{};
 
 public:
 	/**
 	 * \brief Constructor in case no repository is provided
 	 */
-	Service() noexcept{
-		this->repo = Repository();
-	}
+	Service() = default;
 
 	/**
 	 * \brief Service constructor
 	 * \param repo repository to hold elements
 	 */
-	Service(const Repository& repo);
+	//Service(const Repository& repo);
+
+	~Service() = default;
 
 	/**
 	 * \brief Returns all elements in list
 	 * \return list of elements
 	 */
-	const std::vector<Subject>* getAll() const;
+	const DynamicArray<Subject>* getAll() const noexcept;
 
 	/**
 	 * \brief Adds a subject to the list
@@ -67,4 +69,13 @@ public:
 	void updateSubject(const int& index, const string& name, const int& hours, const string& type, const string& teacher);
 
 	friend std::ostream& operator<<(std::ostream& out, const Service& serv);
+
+	/**
+	 * \brief Filters list with given method
+	 * \param condition method to filter by
+	 * \return filtered list
+	 */
+	DynamicArray<Subject> filter(const std::function<bool(const Subject& subject)>& condition) const;
+
+	DynamicArray<Subject> sort(const std::function<bool(const Subject& s1, const Subject& s2)>& condition, bool reverse) const;
 };

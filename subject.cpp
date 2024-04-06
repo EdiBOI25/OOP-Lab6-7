@@ -15,7 +15,6 @@ Subject::Subject(const Subject& s) {
 	this->hours_per_week = s.hours_per_week;
 	this->type = s.type;
 	this->teacher = s.teacher;
-	std::cout << "subiectul s-a copiat\n";
 }
 
 //Subject::~Subject() {
