@@ -31,6 +31,12 @@ public:
 		dim = 0;
 	}
 
+	DynamicArray() {
+		this->capacity = 2;
+		elems = new ElementType[this->capacity];
+		dim = 0;
+	}
+
 	/**
 	 * \brief Destructor
 	 */

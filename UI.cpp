@@ -105,7 +105,7 @@ void UI::filterSubjects() {
 				return s.getHours() <= hours;
 				});
 			if (result.size() == 0) {
-				std::cout << "No subject match criteria\n";
+				std::cout << "No subject matches criteria\n";
 				return;
 			}
 			for (int i = 0; i < result.size(); ++i) {

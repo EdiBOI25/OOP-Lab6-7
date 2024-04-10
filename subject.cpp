@@ -59,7 +59,7 @@ std::ostream& operator<<(std::ostream& out, const Subject& subject) {
 }
 
 bool Subject::operator==(const Subject& other) const noexcept{
-	if (this->name != other.name) {
+	/*if (this->name != other.name) {
 		return false;
 	}
 	if (this->hours_per_week != other.hours_per_week) {
@@ -72,11 +72,13 @@ bool Subject::operator==(const Subject& other) const noexcept{
 		return false;
 	}
 
-	return true;
+	return true;*/
+	return this->name == other.name && this->hours_per_week == other.hours_per_week && this->type == other.type && this->teacher== other.teacher;
 }
 
 bool Subject::operator!=(const Subject& other) const noexcept{
-	if (this->name != other.name) {
+	return this->name != other.name || this->hours_per_week != other.hours_per_week || this->type != other.type || this->teacher != other.teacher;
+	/*if (this->name != other.name) {
 		return true;
 	}
 	if (this->hours_per_week != other.hours_per_week) {
@@ -89,5 +91,5 @@ bool Subject::operator!=(const Subject& other) const noexcept{
 		return true;
 	}
 
-	return false;
+	return false;*/
 }
