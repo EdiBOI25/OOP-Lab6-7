@@ -2,10 +2,12 @@
 #include <functional>
 
 #include "repository.h"
+#include "Cart.h"
 
 class Service {
 private:
 	Repository repo{};
+	Cart contract{};
 
 public:
 	/**
@@ -17,7 +19,7 @@ public:
 	 * \brief Service constructor
 	 * \param repo repository to hold elements
 	 */
-	//Service(const Repository& repo);
+	 //Service(const Repository& repo);
 
 	~Service() = default;
 
@@ -84,4 +86,23 @@ public:
 	 * \return sorted list
 	 */
 	std::vector<Subject> sort(const std::function<bool(const Subject& s1, const Subject& s2)>& condition, bool reverse) const;
+
+	/**
+	 * \brief Add subjects with given name to contract
+	 * \param name name of subject
+	 */
+	void addToContract(const string& name);
+
+	/**
+	 * \brief Empties contract
+	 */
+	void clearContract() noexcept;
+
+	/**
+	 * \brief Adds random subjects to contract
+	 * \param number number of subjects
+	 */
+	void generateRandomContract(const int& number);
+
+	void printContract() const;
 };

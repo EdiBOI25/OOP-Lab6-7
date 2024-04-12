@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <algorithm>
+#include <random>
+#include <chrono>
 
 //Service::Service(const Repository& repo) {
 //	this->repo = repo;
@@ -78,6 +80,48 @@ std::vector<Subject> Service::sort(const std::function<bool(const Subject& s1, c
 
 	return result;
 }
+
+void Service::addToContract(const string& name) {
+	vector<Subject> subjects = this->filter([name](const Subject& s) {
+		return s.getName() == name;
+		});
+
+	if (subjects.empty())
+		throw std::exception("There are no subjects with given name");
+
+	for (const auto& s : subjects) {
+		this->contract.add(s);
+	}
+}
+
+void Service::clearContract() noexcept {
+	this->contract.clear();
+}
+
+void Service::generateRandomContract(const int& number) {
+	if (number <= 0)
+		throw std::exception("Number of subjects must be positive");
+
+	if (number > this->size())
+		throw std::exception("Number of subjects must be less than total number of subjects");
+
+	this->contract.clear();
+	vector<Subject> subjects = *this->getAll();
+
+
+	const auto seed = std::chrono::system_clock::now().time_since_epoch().count();
+	std::mt19937_64 rng(seed); // ???
+	std::shuffle(subjects.begin(), subjects.end(), rng);
+
+	for (int i = 0; i < number; ++i) {
+		this->contract.add(subjects.at(i));
+	}
+}
+
+void Service::printContract() const {
+	std::cout << this->contract;
+}
+
 
 std::ostream& operator<<(std::ostream& out, const Service& serv) {
 	out << serv.repo;

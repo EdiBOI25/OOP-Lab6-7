@@ -14,6 +14,13 @@ private:
 		"5. Filter subjects\n"
 		"6. Sort subjects\n"
 		"9. Print all subjects\n"
+		"-------------------------\n"
+		"10. Generate random contract\n"
+		"11. Add subject to contract\n"
+		"12. Clear contract\n"
+		"19. Print contract\n"
+		"\n"
+		"0. Exit\n"
 	};
 
 	/**
@@ -43,6 +50,14 @@ private:
 	void sortSubjects();
 
 	void printAllSubjects();
+
+	void generateRandomContract();
+
+	void addToContract();
+
+	void clearContract();
+
+	void printContract();
 
 public:
 	/**

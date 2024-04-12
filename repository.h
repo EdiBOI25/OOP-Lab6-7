@@ -113,8 +113,10 @@ public:
 		/*for(int i = 0; i < repo.size(); ++i) {
 			out << i << ": " << repo.list.at(i) << '\n';
 		}*/
+		int index = 0;
 		for (const auto& s : *repo.getAll()) {
-			out << s << '\n';
+			out << index << ": " << s << '\n';
+			index++;
 		}
 		return out;
 	}

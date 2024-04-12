@@ -206,6 +206,38 @@ void UI::printAllSubjects() {
 	cout << this->service;
 }
 
+void UI::generateRandomContract() {
+	try {
+		const int number{ readInteger("Enter number of subjects to generate: ") };
+		this->service.generateRandomContract(number);
+		std::cout << "Contract generated!\n";
+		this->printContract();
+	}
+	catch (const std::exception& e) {
+		std::cout << "Couldn't generate contract: " << string(e.what()) << '\n';
+	}
+}
+
+void UI::addToContract() {
+	try {
+		const string name{ readString("Enter name of subject to add: ") };
+		this->service.addToContract(name);
+		std::cout << "Subject added to contract!\n";
+	}
+	catch (const std::exception& e) {
+		std::cout << "Couldn't add subject to contract: " << string(e.what()) << '\n';
+	}
+}
+
+void UI::clearContract() {
+	this->service.clearContract();
+	std::cout << "Contract cleared!\n";
+}
+
+void UI::printContract() {
+	this->service.printContract();
+}
+
 void UI::run() {
 	int option{ -1 };
 	while(true) {
@@ -243,6 +275,18 @@ void UI::run() {
 		case 0:
 			cout << "Bye bye!\n";
 			return;
+		case 10:
+			this->generateRandomContract();
+			break;
+		case 11:
+			this->addToContract();
+			break;
+		case 12:
+			this->clearContract();
+			break;
+		case 19:
+			this->printContract();
+			break;
 		default:
 			cout << "Invalid option\n";
 		}

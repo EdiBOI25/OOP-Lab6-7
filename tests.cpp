@@ -72,6 +72,20 @@ void test_domain() {
 //	assert(list.at(1) == 4);
 //}
 
+void test_cart() {
+	Cart cart;
+	cart.add(Subject("math", 5, "compulsory", "some dude"));
+	cart.add(Subject("english", 3, "optional", "other dude"));
+	cart.add(Subject("physics", 4, "compulsory", "another dude"));
+	assert(cart.size() == 3);
+	assert((*cart.getAll())[1].getName() == "english");
+
+	cart.clear();
+	assert(cart.size() == 0);
+
+	std::cout << cart;
+}
+
 void test_repository() {
 	Repository repo;
 
@@ -135,6 +149,31 @@ void test_service() {
 	catch(const std::exception& e) {
 		assert(string(e.what()) == "Subject already exists");
 	}
+
+	try {
+		service.addToContract("nothing");
+	}
+	catch (const std::exception& e) {
+		assert(string(e.what()) == "There are no subjects with given name");
+	}
+	service.addToContract("math");
+	service.addToContract("english");
+
+	try {
+		service.generateRandomContract(-3);
+	}
+	catch (const std::exception& e) {
+		assert(string(e.what()) == "Number of subjects must be positive");
+	}
+	try {
+		service.generateRandomContract(50);
+	}
+	catch (const std::exception& e) {
+		assert(string(e.what()) == "Number of subjects must be less than total number of subjects");
+	}
+	service.generateRandomContract(2);
+
+	service.clearContract();
 
 	assert(service.size() == 3);
 
