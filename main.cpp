@@ -5,7 +5,7 @@
 int main()
 {
     test_domain();
-    test_dynamic_array();
+    //test_dynamic_array();
     test_repository();
     test_service();
 

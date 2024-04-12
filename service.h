@@ -25,7 +25,7 @@ public:
 	 * \brief Returns all elements in list
 	 * \return list of elements
 	 */
-	const DynamicArray<Subject>* getAll() const noexcept;
+	const std::vector<Subject>* getAll() const noexcept;
 
 	/**
 	 * \brief Adds a subject to the list
@@ -75,7 +75,13 @@ public:
 	 * \param condition method to filter by
 	 * \return filtered list
 	 */
-	DynamicArray<Subject> filter(const std::function<bool(const Subject& subject)>& condition) const;
+	std::vector<Subject> filter(const std::function<bool(const Subject& subject)>& condition) const;
 
-	DynamicArray<Subject> sort(const std::function<bool(const Subject& s1, const Subject& s2)>& condition, bool reverse) const;
+	/**
+	 * \brief Sorts and returns list
+	 * \param condition method to sort by
+	 * \param reverse whether sorting should be in reverse order
+	 * \return sorted list
+	 */
+	std::vector<Subject> sort(const std::function<bool(const Subject& s1, const Subject& s2)>& condition, bool reverse) const;
 };

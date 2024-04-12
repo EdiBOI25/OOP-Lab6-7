@@ -8,8 +8,8 @@ typedef Subject Element;
 
 class Repository {
 private:
-	//std::vector<Element> list{};
-	DynamicArray<Element> list{10};
+	std::vector<Element> list{};
+	//DynamicArray<Element> list{10};
 public:
 	/**
 	 * \brief Repository constructor
@@ -25,7 +25,7 @@ public:
 	 * \brief Returns the list of elements in repository
 	 * \return list of elements in repository
 	 */
-	const DynamicArray<Element>* getAll() const noexcept{
+	const std::vector<Element>* getAll() const noexcept{
 		return &this->list;
 	}
 
@@ -61,7 +61,7 @@ public:
 		if (index == -1) {
 			throw std::exception("Couldn't find element to remove");
 		}
-		this->list.erase(index);
+		this->list.erase(this->list.begin() + index);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public:
 		if (index < 0 || index >= this->list.size()) {
 			throw std::out_of_range("Index out of range");
 		}
-		this->list.erase(index);
+		this->list.erase(this->list.begin() + index);
 	}
 
 	/**
@@ -80,11 +80,11 @@ public:
 	 * \param index position to update element
 	 * \param element element to replace the old one with
 	 */
-	void update(const int& index, const Element& element) const {
+	void update(const int& index, const Element& element) {
 		if (index < 0 || index >= this->list.size()) {
 			throw std::out_of_range("Index out of range");
 		}
-		this->list.at(index) = element;
+		this->list[index] = element;
 	}
 
 	/**
@@ -95,9 +95,9 @@ public:
 		return this->list.size();
 	}
 
-	Element& operator[](const int& index) const {
+	const Element& operator[](const int& index) const{
 		// if (index < 0 || index >= this->list.size())
-		return this->list.at(index);
+		return this->list[index];
 	}
 
 	friend std::ostream& operator<<(std::ostream& out, const Repository& repo) {

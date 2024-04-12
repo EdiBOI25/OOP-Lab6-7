@@ -101,7 +101,7 @@ void UI::filterSubjects() {
 		const int option{ readInteger("Choose an option: ") };
 		if (option == 1) {
 			const int hours = readInteger("Enter number of hours: ");
-			const DynamicArray<Subject> result = this->service.filter([=](const Subject& s) {
+			const std::vector<Subject> result = this->service.filter([=](const Subject& s) {
 				return s.getHours() <= hours;
 				});
 			if (result.size() == 0) {
@@ -115,7 +115,7 @@ void UI::filterSubjects() {
 
 		else if (option == 2) {
 			const string teacher = readString("Enter teacher: ");
-			const DynamicArray<Subject> result = this->service.filter([=](const Subject& s) {
+			const std::vector<Subject> result = this->service.filter([=](const Subject& s) {
 				return s.getTeacher() == teacher;
 				});
 			if (result.size() == 0) {
@@ -145,7 +145,7 @@ void UI::sortSubjects() {
 		const int option{ readInteger("Choose an option: ") };
 		const int reverse{ readInteger("Reverse order? (0 or 1): ") };
 		if (option == 1) {
-			const DynamicArray<Subject> result = this->service.sort([=](const Subject& s1, const Subject& s2) {
+			const std::vector<Subject> result = this->service.sort([=](const Subject& s1, const Subject& s2) {
 				return s1.getName() > s2.getName();
 				}, reverse);
 			for (int i = 0; i < result.size(); ++i) {
@@ -154,7 +154,7 @@ void UI::sortSubjects() {
 		}
 
 		else if (option == 2) {
-			const DynamicArray<Subject> result = this->service.sort([=](const Subject& s1, const Subject& s2) {
+			const std::vector<Subject> result = this->service.sort([=](const Subject& s1, const Subject& s2) {
 				return s1.getHours() > s2.getHours();
 				}, reverse);
 			for (int i = 0; i < result.size(); ++i) {
@@ -162,7 +162,7 @@ void UI::sortSubjects() {
 			}
 		}
 		else if (option == 3) {
-			const DynamicArray<Subject> result = this->service.sort([=](const Subject& s1, const Subject& s2) {
+			const std::vector<Subject> result = this->service.sort([=](const Subject& s1, const Subject& s2) {
 				if (s1.getTeacher() > s2.getTeacher()) {
 					return true;
 				}

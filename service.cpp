@@ -6,7 +6,7 @@
 //	this->repo = repo;
 //}
 
-const DynamicArray<Subject>* Service::getAll() const noexcept{
+const std::vector<Subject>* Service::getAll() const noexcept{
 	return this->repo.getAll();
 }
 
@@ -37,8 +37,8 @@ void Service::updateSubject(const int& index, const string& name, const int& hou
 	this->repo.update(index, subject);
 }
 
-DynamicArray<Subject> Service::filter(const std::function<bool(const Subject& subject)>& condition) const {
-	DynamicArray<Subject> result(10);
+std::vector<Subject> Service::filter(const std::function<bool(const Subject& subject)>& condition) const {
+	std::vector<Subject> result;
 	for(int i = 0; i < this->repo.size(); ++i) {
 		if(condition(this->repo[i])) {
 			result.push_back(this->repo[i]);
@@ -47,9 +47,9 @@ DynamicArray<Subject> Service::filter(const std::function<bool(const Subject& su
 	return result;
 }
 
-DynamicArray<Subject> Service::sort(const std::function<bool(const Subject& s1, const Subject& s2)>& condition,
+std::vector<Subject> Service::sort(const std::function<bool(const Subject& s1, const Subject& s2)>& condition,
 	bool reverse) const {
-	DynamicArray<Subject> result{2};
+	std::vector<Subject> result;
 	for(int i = 0; i < this->getAll()->size(); ++i) {
 		result.push_back(this->getAll()->at(i));
 	}

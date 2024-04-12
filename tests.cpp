@@ -38,39 +38,39 @@ void test_domain() {
 	assert(maths == maths2);
 	assert(maths != maths3);
 
-	Subject math_copy = maths2;
+	const Subject math_copy = maths2;
 	assert(math_copy == maths2);
 }
 
-void test_dynamic_array() {
-	DynamicArray<int> list{-3};
-
-	list.push_back(1);
-	list.push_back(5);
-	list.push_back(4);
-	list.push_back(7);
-	list.push_back(2);
-
-	assert(list.size() == 5);
-	assert(list.at(3) == 7);
-	try {
-		const int k = list.at(100);
-		std::cout << k << '\n';
-	}
-	catch(const std::exception& e) {
-		assert(string(e.what()) == "Index out of range");
-	}
-
-	try {
-		list.erase(100);
-	}
-	catch(const std::exception& e) {
-		assert(string(e.what()) == "Index out of range");
-	}
-	list.erase(1);
-	assert(list.size() == 4);
-	assert(list.at(1) == 4);
-}
+//void test_dynamic_array() {
+//	DynamicArray<int> list{-3};
+//
+//	list.push_back(1);
+//	list.push_back(5);
+//	list.push_back(4);
+//	list.push_back(7);
+//	list.push_back(2);
+//
+//	assert(list.size() == 5);
+//	assert(list.at(3) == 7);
+//	try {
+//		const int k = list.at(100);
+//		std::cout << k << '\n';
+//	}
+//	catch(const std::exception& e) {
+//		assert(string(e.what()) == "Index out of range");
+//	}
+//
+//	try {
+//		list.erase(100);
+//	}
+//	catch(const std::exception& e) {
+//		assert(string(e.what()) == "Index out of range");
+//	}
+//	list.erase(1);
+//	assert(list.size() == 4);
+//	assert(list.at(1) == 4);
+//}
 
 void test_repository() {
 	Repository repo;
@@ -81,7 +81,7 @@ void test_repository() {
 
 	assert(repo.size() == 3);
 
-	const DynamicArray<Subject>* subjects = repo.getAll();
+	const std::vector<Subject>* subjects = repo.getAll();
 	std::cout << subjects->at(0);
 	assert(subjects->at(0).getName() == "math");
 
@@ -138,7 +138,7 @@ void test_service() {
 
 	assert(service.size() == 3);
 
-	const DynamicArray<Subject>* subjects = service.getAll();
+	const std::vector<Subject>* subjects = service.getAll();
 	assert(subjects->at(0).getName() == "math");
 
 	assert(service.findSubject("english", 3, "optional", "other dude") == 1);
@@ -169,7 +169,7 @@ void test_service() {
 	service.removeSubject(1);
 	assert(service.size() == 2);
 
-	DynamicArray<Subject> filtered_array = service.filter([](const Subject& subject) {
+	std::vector<Subject> filtered_array = service.filter([](const Subject& subject) {
 		return subject.getType() == "compulsory";
 		});
 	assert(filtered_array.size() == 1);
@@ -181,13 +181,13 @@ void test_service() {
 	service.addSubject("s2", 12, "bndiufnb", "soeuif sdfjh");
 	service.addSubject("s10", 2, "shliefushdf", "aoidsj sdfjh");
 
-	DynamicArray<Subject> sorted_array1 = service.sort([](const Subject& s1, const Subject& s2) {
+	std::vector<Subject> sorted_array1 = service.sort([](const Subject& s1, const Subject& s2) {
 		return s1.getHours() > s2.getHours();
 		}, false);
 	assert(sorted_array1.at(0).getName() == "s10");
 	assert(sorted_array1.at(3).getName() == "s2");
 
-	DynamicArray<Subject> sorted_array2 = service.sort([](const Subject& s1, const Subject& s2) {
+	std::vector<Subject> sorted_array2 = service.sort([](const Subject& s1, const Subject& s2) {
 		return s1.getName() > s2.getName();
 		}, true);
 	assert(sorted_array2.at(0).getName() == "s7");
