@@ -182,13 +182,14 @@ void test_service() {
 	service.addSubject("s10", 2, "shliefushdf", "aoidsj sdfjh");
 
 	std::vector<Subject> sorted_array1 = service.sort([](const Subject& s1, const Subject& s2) {
-		return s1.getHours() > s2.getHours();
+		return s1.getHours() < s2.getHours();
 		}, false);
+
 	assert(sorted_array1.at(0).getName() == "s10");
-	assert(sorted_array1.at(3).getName() == "s2");
+	assert(sorted_array1.at(3).getName() == "s3");
 
 	std::vector<Subject> sorted_array2 = service.sort([](const Subject& s1, const Subject& s2) {
-		return s1.getName() > s2.getName();
+		return s1.getName() < s2.getName();
 		}, true);
 	assert(sorted_array2.at(0).getName() == "s7");
 	assert(sorted_array2.at(3).getName() == "s2");

@@ -108,8 +108,11 @@ void UI::filterSubjects() {
 				std::cout << "No subject matches criteria\n";
 				return;
 			}
-			for (int i = 0; i < result.size(); ++i) {
+			/*for (int i = 0; i < result.size(); ++i) {
 				std::cout << result.at(i) << '\n';
+			}*/
+			for (const auto& s : result) {
+				std::cout << s << '\n';
 			}
 		}
 
@@ -122,8 +125,11 @@ void UI::filterSubjects() {
 				std::cout << "No subject match criteria\n";
 				return;
 			}
-			for (int i = 0; i < result.size(); ++i) {
+			/*for (int i = 0; i < result.size(); ++i) {
 				std::cout << result.at(i) << '\n';
+			}*/
+			for (const auto& s : result) {
+				std::cout << s << '\n';
 			}
 		}
 		else {
@@ -146,30 +152,36 @@ void UI::sortSubjects() {
 		const int reverse{ readInteger("Reverse order? (0 or 1): ") };
 		if (option == 1) {
 			const std::vector<Subject> result = this->service.sort([=](const Subject& s1, const Subject& s2) {
-				return s1.getName() > s2.getName();
+				return s1.getName() < s2.getName();
 				}, reverse);
-			for (int i = 0; i < result.size(); ++i) {
+			/*for (int i = 0; i < result.size(); ++i) {
 				std::cout << result.at(i) << '\n';
+			}*/
+			for (const auto& s : result) {
+				std::cout << s << '\n';
 			}
 		}
 
 		else if (option == 2) {
 			const std::vector<Subject> result = this->service.sort([=](const Subject& s1, const Subject& s2) {
-				return s1.getHours() > s2.getHours();
+				return s1.getHours() < s2.getHours();
 				}, reverse);
-			for (int i = 0; i < result.size(); ++i) {
+			/*for (int i = 0; i < result.size(); ++i) {
 				std::cout << result.at(i) << '\n';
+			}*/
+			for (const auto& s : result) {
+				std::cout << s << '\n';
 			}
 		}
 		else if (option == 3) {
 			const std::vector<Subject> result = this->service.sort([=](const Subject& s1, const Subject& s2) {
-				if (s1.getTeacher() > s2.getTeacher()) {
-					return true;
-				}
-				return s1.getType() > s2.getType();
+				return (s1.getTeacher() < s2.getTeacher()) || (s1.getTeacher() == s2.getTeacher() && s1.getType() < s2.getType());
 				}, reverse);
-			for (int i = 0; i < result.size(); ++i) {
+			/*for (int i = 0; i < result.size(); ++i) {
 				std::cout << result.at(i) << '\n';
+			}*/
+			for (const auto& s : result) {
+				std::cout << s << '\n';
 			}
 		}
 		else {

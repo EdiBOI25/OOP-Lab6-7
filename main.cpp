@@ -4,14 +4,18 @@
 
 int main()
 {
-    test_domain();
-    //test_dynamic_array();
-    test_repository();
-    test_service();
+    {
+        test_domain();
+        //test_dynamic_array();
+        test_repository();
+        test_service();
 
-    UI ui{};
-    system("cls");
-    ui.run();
+        UI ui{};
+        system("cls");
+        ui.run();
+    }
+
+    _CrtDumpMemoryLeaks();
 
     return 0;
 }

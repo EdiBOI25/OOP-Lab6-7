@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include "DynamicArray.h"
@@ -44,12 +45,18 @@ public:
 	 * \return position of first found element or -1 if not found
 	 */
 	int find(const Element& element) const {
-		for (int i = 0; i < this->list.size(); i++) {
+		/*for (int i = 0; i < this->list.size(); i++) {
 			if (this->list.at(i) == element) {
 				return i;
 			}
 		}
-		return  -1;
+		return  -1;*/
+
+		const auto it = std::find(this->list.begin(), this->list.end(), element);
+		if (it != this->list.end()) {
+			return static_cast<int>(std::distance(this->list.begin(), it));
+		}
+		return -1;
 	}
 
 	/**
@@ -96,13 +103,18 @@ public:
 	}
 
 	const Element& operator[](const int& index) const{
-		// if (index < 0 || index >= this->list.size())
+		if (index < 0 || index >= this->list.size()) {
+			throw std::out_of_range("Index out of range");
+		}
 		return this->list[index];
 	}
 
 	friend std::ostream& operator<<(std::ostream& out, const Repository& repo) {
-		for(int i = 0; i < repo.size(); ++i) {
+		/*for(int i = 0; i < repo.size(); ++i) {
 			out << i << ": " << repo.list.at(i) << '\n';
+		}*/
+		for (const auto& s : *repo.getAll()) {
+			out << s << '\n';
 		}
 		return out;
 	}
