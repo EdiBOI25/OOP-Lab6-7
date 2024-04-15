@@ -80,10 +80,11 @@ void test_cart() {
 	assert(cart.size() == 3);
 	assert((*cart.getAll())[1].getName() == "english");
 
+	std::cout << cart;
+
 	cart.clear();
 	assert(cart.size() == 0);
 
-	std::cout << cart;
 }
 
 void test_repository() {
@@ -134,6 +135,13 @@ void test_repository() {
 	repo.remove(1);
 	assert(repo.size() == 1);
 
+	try {
+		repo[1000];
+	}
+	catch(const std::exception& e) {
+		assert(string(e.what()) == "Index out of range");
+	}
+
 	std::cout << repo << '\n';
 }
 
@@ -158,6 +166,7 @@ void test_service() {
 	}
 	service.addToContract("math");
 	service.addToContract("english");
+	service.printContract();
 
 	try {
 		service.generateRandomContract(-3);
@@ -220,7 +229,7 @@ void test_service() {
 	service.addSubject("s2", 12, "bndiufnb", "soeuif sdfjh");
 	service.addSubject("s10", 2, "shliefushdf", "aoidsj sdfjh");
 
-	std::vector<Subject> sorted_array1 = service.sort([](const Subject& s1, const Subject& s2) {
+	std::vector<Subject> sorted_array1 = service.sort([](const Subject& s1, const Subject& s2) noexcept{
 		return s1.getHours() < s2.getHours();
 		}, false);
 
