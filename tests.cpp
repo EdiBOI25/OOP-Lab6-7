@@ -151,6 +151,11 @@ void test_service() {
 	service.addSubject("math", 5, "compulsory", "some dude");
 	service.addSubject("english", 3, "optional", "other dude");
 	service.addSubject("physics", 4, "compulsory", "another dude");
+
+	auto report = service.reportByType();
+	assert(report["compulsory"].type == "compulsory");
+	assert(report["optional"].count == 1);
+
 	try {
 		service.addSubject("physics", 4, "compulsory", "another dude");
 	}

@@ -45,9 +45,11 @@ public:
 		return this->list.size();
 	}
 
-	// TOADD: load from file method
+	// TODO: load from file method
 
-	// TOADD: export to file method
+	// TODO: export to file method
+
+	// TODO: undo
 
 	friend std::ostream& operator<<(std::ostream& out, const Cart& cart) {
 		int index = 0;

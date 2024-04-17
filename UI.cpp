@@ -234,6 +234,21 @@ void UI::clearContract() {
 	std::cout << "Contract cleared!\n";
 }
 
+void UI::reportByType() {
+	try {
+		const auto report = this->service.reportByType();
+		if (report.empty()) {
+			throw std::exception("No subjects to report");
+		}
+		for(const auto& pair: report) {
+			std::cout << pair.first << ": " << pair.second.count << '\n';
+		}
+	}
+	catch (const std::exception& e) {
+		std::cout << "Couldn't report: " << string(e.what()) << '\n';
+	}
+}
+
 void UI::printContract() {
 	this->service.printContract();
 }
@@ -268,6 +283,9 @@ void UI::run() {
 			break;
 		case 6:
 			this->sortSubjects();
+			break;
+		case 7:
+			this->reportByType();
 			break;
 		case 9:
 			this->printAllSubjects();

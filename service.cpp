@@ -9,6 +9,11 @@
 //	this->repo = repo;
 //}
 
+DTO operator++(DTO& dto) {
+	dto.count++;
+	return dto;
+}
+
 const std::vector<Subject>* Service::getAll() const noexcept{
 	return this->repo.getAll();
 }
@@ -116,6 +121,21 @@ void Service::generateRandomContract(const int& number) {
 	for (int i = 0; i < number; ++i) {
 		this->contract.add(subjects.at(i));
 	}
+}
+
+std::map<string, DTO> Service::reportByType() const{
+	std::map<string, DTO> result{};
+	const vector<Subject> subjects = *this->getAll();
+
+	for (const auto& s : subjects) {
+		const string stype = s.getType();
+		if (result[stype].type.empty()) {
+			result[stype].type = stype;
+		}
+		++result[stype];
+	}
+
+	return result;
 }
 
 void Service::printContract() const {

@@ -1,12 +1,19 @@
 ﻿#pragma once
 #include <functional>
+#include <map>
 
 #include "repository.h"
 #include "Cart.h"
 
+struct DTO {
+	string type{};
+	int count{ 0 };
+};
+DTO operator++(DTO& dto);
+
 class Service {
 private:
-	Repository repo{};
+	Repository repo{}; // TODO referinta la repo si cart
 	Cart contract{};
 
 public:
@@ -103,6 +110,12 @@ public:
 	 * \param number number of subjects
 	 */
 	void generateRandomContract(const int& number);
+
+	/**
+	 * \brief Get count for each type of subject
+	 * \return Subject type and their respective DTOs containing type and count
+	 */
+	std::map<string, DTO> reportByType() const;
 
 	void printContract() const;
 };
