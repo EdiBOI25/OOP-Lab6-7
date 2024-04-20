@@ -1,6 +1,7 @@
 ﻿#include <algorithm>
 #include <cassert>
 #include <iostream>
+#include <fstream>
 #include <exception>
 
 #include "subject.h"
@@ -82,6 +83,8 @@ void test_cart() {
 
 	std::cout << cart;
 
+	cart.exportToFile("cart_export_test");
+
 	cart.clear();
 	assert(cart.size() == 0);
 
@@ -96,9 +99,9 @@ void test_repository() {
 
 	assert(repo.size() == 3);
 
-	const std::vector<Subject>* subjects = repo.getAll();
-	std::cout << subjects->at(0);
-	assert(subjects->at(0).getName() == "math");
+	const std::vector<Subject> subjects = repo.getAll();
+	std::cout << subjects.at(0);
+	assert(subjects.at(0).getName() == "math");
 
 	Element ceva = repo[1];
 	assert(ceva.getHours() == 3);
@@ -143,10 +146,34 @@ void test_repository() {
 	}
 
 	std::cout << repo << '\n';
+
+	std::ofstream fout("data_test.txt");
+	fout << "engleza;10;obligatoriu;ana maria\n"
+		"mate;3;optional;alt nume\n"
+		"S O;4;altele;ceva smecher\n";
+	fout.close();
+
+	try {
+		RepoWithFile reponaspa("nuexist.txt");
+	}
+	catch (const std::exception& e) {
+		assert(string(e.what()) == "File not found");
+	}
+	RepoWithFile repo_file("data_test.txt");
+	std::cout << "\nREPO FILE:\n";
+	std::cout << repo_file << '\n';
+	assert(repo_file.size() == 3);
+	repo_file.add(Subject("bla", 1, "bla", "bla"));
+	assert(repo_file.size() == 4);
+	repo_file.update(1, Subject("ceva", 10, "bla", "bla"));
+	repo_file.remove(2);
+	repo_file.remove(Subject("ceva", 10, "bla", "bla"));
+	assert(repo_file.size() == 2);
 }
 
 void test_service() {
-	Service service;
+	Repository repo{};
+	Service service(repo);
 
 	service.addSubject("math", 5, "compulsory", "some dude");
 	service.addSubject("english", 3, "optional", "other dude");
@@ -186,13 +213,15 @@ void test_service() {
 		assert(string(e.what()) == "Number of subjects must be less than total number of subjects");
 	}
 	service.generateRandomContract(2);
+	assert(service.contractSize() == 2);
+	service.exportContract("cacamaca");
 
 	service.clearContract();
 
 	assert(service.size() == 3);
 
-	const std::vector<Subject>* subjects = service.getAll();
-	assert(subjects->at(0).getName() == "math");
+	const std::vector<Subject> subjects = service.getAll();
+	assert(subjects.at(0).getName() == "math");
 
 	assert(service.findSubject("english", 3, "optional", "other dude") == 1);
 	assert(service.findSubject("skfdjhg", 3, "optional", "other dude") == -1);
@@ -204,7 +233,7 @@ void test_service() {
 		assert(string(e.what()) == "Index out of range");
 	}
 	service.updateSubject(0, "aaaa", 10, "aa", "asdasd");
-	assert(service.getAll()->at(0).getName() == "aaaa");
+	assert(service.getAll().at(0).getName() == "aaaa");
 	try {
 		service.updateSubject(0, "aaaa", 10, "aa", "asdasd");
 	}

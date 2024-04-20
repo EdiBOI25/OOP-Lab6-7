@@ -361,3 +361,9 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/cacamaca.csv
+/output.txt
+/input.txt
+/cart_export_test.csv
+/contract.csv
+/data_test.txt

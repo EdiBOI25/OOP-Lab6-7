@@ -212,6 +212,7 @@ void UI::generateRandomContract() {
 		this->service.generateRandomContract(number);
 		std::cout << "Contract generated!\n";
 		this->printContract();
+		std::cout << "Subjects in contract: " << service.contractSize() << '\n';
 	}
 	catch (const std::exception& e) {
 		std::cout << "Couldn't generate contract: " << string(e.what()) << '\n';
@@ -223,6 +224,7 @@ void UI::addToContract() {
 		const string name{ readString("Enter name of subject to add: ") };
 		this->service.addToContract(name);
 		std::cout << "Subject added to contract!\n";
+		std::cout << "Subjects in contract: " << service.contractSize() << '\n';
 	}
 	catch (const std::exception& e) {
 		std::cout << "Couldn't add subject to contract: " << string(e.what()) << '\n';
@@ -232,6 +234,19 @@ void UI::addToContract() {
 void UI::clearContract() {
 	this->service.clearContract();
 	std::cout << "Contract cleared!\n";
+	std::cout << "Subjects in contract: " << service.contractSize() << '\n';
+}
+
+void UI::exportContract() {
+	try {
+		const string file_name{ readString("Enter name of file (without any extension): ") };
+		this->service.exportContract(file_name);
+		std::cout << "Contract exported to file " << file_name << ".csv\n";
+		std::cout << "Subjects in contract: " << service.contractSize() << '\n';
+	}
+	catch (const std::exception& e) {
+		std::cout << "Couldn't print contract: " << string(e.what()) << '\n';
+	}
 }
 
 void UI::reportByType() {
@@ -254,7 +269,7 @@ void UI::printContract() {
 }
 
 void UI::run() {
-	int option{ -1 };
+	int option;
 	while(true) {
 		cout << this->main_menu << '\n';
 		try {	
@@ -301,6 +316,9 @@ void UI::run() {
 			break;
 		case 12:
 			this->clearContract();
+			break;
+		case 13:
+			this->exportContract();
 			break;
 		case 19:
 			this->printContract();

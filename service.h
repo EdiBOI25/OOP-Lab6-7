@@ -13,28 +13,24 @@ DTO operator++(DTO& dto);
 
 class Service {
 private:
-	Repository repo{}; // TODO referinta la repo si cart
-	Cart contract{};
+	Repository& repo;
+	Cart contract;
 
 public:
-	/**
-	 * \brief Constructor in case no repository is provided
-	 */
-	Service() = default;
 
 	/**
 	 * \brief Service constructor
 	 * \param repo repository to hold elements
 	 */
-	 //Service(const Repository& repo);
+	Service(Repository& repo);
 
-	~Service() = default;
+	virtual ~Service() = default;
 
 	/**
 	 * \brief Returns all elements in list
 	 * \return list of elements
 	 */
-	const std::vector<Subject>* getAll() const noexcept;
+	const std::vector<Subject>& getAll() const noexcept;
 
 	/**
 	 * \brief Adds a subject to the list
@@ -110,6 +106,10 @@ public:
 	 * \param number number of subjects
 	 */
 	void generateRandomContract(const int& number);
+
+	void exportContract(const string& file_name) const;
+
+	size_t contractSize() const;
 
 	/**
 	 * \brief Get count for each type of subject

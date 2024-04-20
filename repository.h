@@ -4,11 +4,15 @@
 #include <vector>
 #include "DynamicArray.h"
 #include "subject.h"
+#include <fstream>
+#include <sstream>
 
 typedef Subject Element;
+using std::vector;
+using std::string;
 
 class Repository {
-private:
+protected:
 	std::vector<Element> list{};
 	//DynamicArray<Element> list{10};
 public:
@@ -20,21 +24,24 @@ public:
 	/**
 	 * \brief Repository deconstructor
 	 */
-	~Repository() = default;
+	virtual ~Repository() = default;
 
 	/**
 	 * \brief Returns the list of elements in repository
 	 * \return list of elements in repository
 	 */
-	const std::vector<Element>* getAll() const noexcept{
-		return &this->list;
+	const std::vector<Element>& getAll() const noexcept{
+		return this->list;
 	}
+	/*const std::vector<Element>* getAll() const noexcept{
+		return &this->list;
+	}*/
 
 	/**
 	 * \brief Adds an element to the list
 	 * \param element the element to be added
 	 */
-	void add(const Element& element) {
+	virtual void add(const Element& element) {
 		this->list.push_back(element);
 	}
 
@@ -63,7 +70,7 @@ public:
 	 * \brief Removes an element from the list
 	 * \param element element to remove
 	 */
-	void remove(const Element& element) {
+	virtual void remove(const Element& element) {
 		const int index = this->find(element);
 		if (index == -1) {
 			throw std::exception("Couldn't find element to remove");
@@ -75,7 +82,7 @@ public:
 	 * \brief Removes an element found at given index
 	 * \param index index of element to remove
 	 */
-	void remove(const size_t& index) {
+	virtual void remove(const size_t& index) {
 		if (index < 0 || index >= this->list.size()) {
 			throw std::out_of_range("Index out of range");
 		}
@@ -87,7 +94,7 @@ public:
 	 * \param index position to update element
 	 * \param element element to replace the old one with
 	 */
-	void update(const int& index, const Element& element) {
+	virtual void update(const int& index, const Element& element) {
 		if (index < 0 || index >= this->list.size()) {
 			throw std::out_of_range("Index out of range");
 		}
@@ -114,10 +121,71 @@ public:
 			out << i << ": " << repo.list.at(i) << '\n';
 		}*/
 		int index = 0;
-		for (const auto& s : *repo.getAll()) {
+		for (const auto& s : repo.getAll()) {
 			out << index << ": " << s << '\n';
 			index++;
 		}
 		return out;
+	}
+};
+
+
+class RepoWithFile: public Repository {
+private:
+	string file_name;
+	void loadFromFile() {
+		std::ifstream file(this->file_name);
+		if(!file.is_open()) {
+			throw std::exception("File not found");
+		}		
+
+		string line{};
+		while(std::getline(file, line)) {
+			if(line.empty()) {
+				continue;
+			}
+			std::stringstream ss(line);
+			string token{};
+			std::vector<string> params{};
+			while(std::getline(ss, token, ';')) {
+				params.push_back(token);
+			}
+
+			const Subject s(params[0], std::stoi(params[1]), params[2], params[3]);
+			Repository::add(s);
+		}
+	}
+
+	void storeToFile() const{
+		std::ofstream fout(this->file_name);
+		for(const auto& s: this->list) {
+			fout << s.getName() << ";" << s.getHours() << ";" << s.getType() << ";" << s.getTeacher() << '\n';
+		}
+		fout.close();
+	}
+public:
+	RepoWithFile(const string& file) : Repository() {
+		this->file_name = file;
+		loadFromFile();
+	}
+
+	void add(const Element& element) override {
+		Repository::add(element);
+		storeToFile();
+	}
+
+	void remove(const Element& element) override {
+		Repository::remove(element);
+		storeToFile();
+	}
+
+	void remove(const size_t& index) override {
+		Repository::remove(index);
+		storeToFile();
+	}
+
+	void update(const int& index, const Element& element) override {
+		Repository::update(index, element);
+		storeToFile();
 	}
 };

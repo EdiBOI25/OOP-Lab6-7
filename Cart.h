@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <vector>
+#include <fstream>
 #include <iostream>
 
 #include "subject.h"
@@ -12,7 +13,7 @@ private:
 public:
 	Cart() = default;
 
-	~Cart() = default;
+	//~Cart() = default;
 
 	/**
 	 * \brief Removes everything from cart
@@ -45,9 +46,15 @@ public:
 		return this->list.size();
 	}
 
-	// TODO: load from file method
-
 	// TODO: export to file method
+	void exportToFile(string file_name) const{
+		file_name += ".csv";
+		std::ofstream fout(file_name);
+		for (const auto& s : this->list) {
+			fout << s.getName() << "," << s.getHours() << "," << s.getType() << "," << s.getTeacher() << '\n';
+		}
+		fout.close();
+	}
 
 	// TODO: undo
 

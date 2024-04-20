@@ -4,6 +4,7 @@
 
 int main()
 {
+
     {
         test_domain();
         test_cart();
@@ -11,8 +12,10 @@ int main()
         test_repository();
         test_service();
 
-        UI ui{};
         system("cls");
+		RepoWithFile repo("data.txt");
+		Service serv(repo);
+        UI ui(serv);
         ui.run();
     }
 

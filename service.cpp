@@ -5,16 +5,17 @@
 #include <random>
 #include <chrono>
 
-//Service::Service(const Repository& repo) {
-//	this->repo = repo;
-//}
+Service::Service(Repository& r) : repo{ r } {
+	this->contract = Cart{};
+}
+
 
 DTO operator++(DTO& dto) {
 	dto.count++;
 	return dto;
 }
 
-const std::vector<Subject>* Service::getAll() const noexcept{
+const std::vector<Subject>& Service::getAll() const noexcept{
 	return this->repo.getAll();
 }
 
@@ -52,13 +53,13 @@ std::vector<Subject> Service::filter(const std::function<bool(const Subject& sub
 			result.push_back(this->repo[i]);
 		}
 	}*/
-	std::copy_if(this->repo.getAll()->begin(), this->repo.getAll()->end(), std::back_inserter(result), condition);
+	std::copy_if(this->repo.getAll().begin(), this->repo.getAll().end(), std::back_inserter(result), condition);
 	return result;
 }
 
 std::vector<Subject> Service::sort(const std::function<bool(const Subject& s1, const Subject& s2)>& condition,
 	bool reverse) const {
-	std::vector<Subject> result{*this->getAll()};
+	std::vector<Subject> result{this->getAll()};
 	/*for(int i = 0; i < this->getAll()->size(); ++i) {
 		result.push_back(this->getAll()->at(i));
 	}*/
@@ -111,7 +112,7 @@ void Service::generateRandomContract(const int& number) {
 		throw std::exception("Number of subjects must be less than total number of subjects");
 
 	this->contract.clear();
-	vector<Subject> subjects = *this->getAll();
+	vector<Subject> subjects = this->getAll();
 
 
 	const auto seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -123,9 +124,17 @@ void Service::generateRandomContract(const int& number) {
 	}
 }
 
+void Service::exportContract(const string& file_name) const{
+	this->contract.exportToFile(file_name);
+}
+
+size_t Service::contractSize() const{
+	return this->contract.size();
+}
+
 std::map<string, DTO> Service::reportByType() const{
 	std::map<string, DTO> result{};
-	const vector<Subject> subjects = *this->getAll();
+	const vector<Subject> subjects = this->getAll();
 
 	for (const auto& s : subjects) {
 		const string stype = s.getType();

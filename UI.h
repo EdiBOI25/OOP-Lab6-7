@@ -2,7 +2,7 @@
 #include "service.h"
 class UI {
 private:
-	Service service{};
+	Service& service;
 	std::string main_menu{
 		"-------------------\n"
 		"Study contract menu\n"
@@ -19,6 +19,7 @@ private:
 		"10. Generate random contract\n"
 		"11. Add subject to contract\n"
 		"12. Clear contract\n"
+		"13. Export contract to file\n"
 		"19. Print contract\n"
 		"\n"
 		"0. Exit\n"
@@ -58,6 +59,8 @@ private:
 
 	void clearContract();
 
+	void exportContract();
+
 	void reportByType();
 
 	void printContract();
@@ -66,23 +69,15 @@ public:
 	/**
 	 * \brief Default constructor in case service is not provided
 	 */
-	UI() noexcept{
+	UI(Service& serv) : service{ serv } {
 		// Adding random subjects
-		this->service.addSubject("default3", 6, "compulsory", "some dude");
+		/*this->service.addSubject("default3", 6, "compulsory", "some dude");
 		this->service.addSubject("default1", 2, "optional", "other dude");
 		this->service.addSubject("default4", 5, "compulsory", "some other dude");
-		this->service.addSubject("default2", 10, "other", "yet another dude");
+		this->service.addSubject("default2", 10, "other", "yet another dude");*/
 	}
 
-	/**
-	 * \brief Constructor with provided service
-	 * \param service the service to use
-	 */
-	UI(const Service& service) {
-		this->service = service;
-	}
-
-	~UI() = default;
+	virtual ~UI() = default;
 
 	/**
 	 * \brief Runs the UI (main menu)
