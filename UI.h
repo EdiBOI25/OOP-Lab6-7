@@ -14,6 +14,7 @@ private:
 		"5. Filter subjects\n"
 		"6. Sort subjects\n"
 		"7. Report by type\n"
+		"8. Undo last action\n"
 		"9. Print all subjects\n"
 		"-------------------------\n"
 		"10. Generate random contract\n"
@@ -62,6 +63,8 @@ private:
 	void exportContract();
 
 	void reportByType();
+
+	void undo();
 
 	void printContract();
 

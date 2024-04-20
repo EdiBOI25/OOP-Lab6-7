@@ -264,6 +264,16 @@ void UI::reportByType() {
 	}
 }
 
+void UI::undo() {
+	try {
+		this->service.undo();
+		std::cout << "Undo successful!\n";
+	}
+	catch (const std::exception& e) {
+		std::cout << "Couldn't undo: " << string(e.what()) << '\n';
+	}
+}
+
 void UI::printContract() {
 	this->service.printContract();
 }
@@ -301,6 +311,9 @@ void UI::run() {
 			break;
 		case 7:
 			this->reportByType();
+			break;
+		case 8:
+			this->undo();
 			break;
 		case 9:
 			this->printAllSubjects();

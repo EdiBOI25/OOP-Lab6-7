@@ -5,7 +5,7 @@
 #include <random>
 #include <chrono>
 
-Service::Service(Repository& r) : repo{ r } {
+Service::Service(Repository& r) : repo{ r }, undo_list{} {
 	this->contract = Cart{};
 }
 
@@ -20,10 +20,12 @@ const std::vector<Subject>& Service::getAll() const noexcept{
 }
 
 void Service::addSubject(const string& name, const int& hours, const string& type, const string& teacher) {
-	const Subject subject{ name, hours, type, teacher };
+	Subject subject{ name, hours, type, teacher };
 	if (this->repo.find(subject) != -1)
 		throw std::exception("Subject already exists");
 	this->repo.add(subject);
+
+	this->undo_list.push_back(std::make_unique<UndoAdd>(subject, this->repo));
 }
 
 size_t Service::size() const noexcept{
@@ -36,14 +38,19 @@ int Service::findSubject(const string& name, const int& hours, const string& typ
 }
 
 void Service::removeSubject(const int& index) {
+	const Subject s = this->repo[index];
 	this->repo.remove(index);
+
+	this->undo_list.push_back(std::make_unique<UndoRemove>(s, this->repo));
 }
 
 void Service::updateSubject(const int& index, const string& name, const int& hours, const string& type, const string& teacher) {
 	const Subject subject{ name, hours, type, teacher };
 	if (this->repo.find(subject) != -1)
 		throw std::exception("Subject already exists");
+	const Subject old_subject = this->repo[index];
 	this->repo.update(index, subject);
+	this->undo_list.push_back(std::make_unique<UndoUpdate>(old_subject, subject, this->repo));
 }
 
 std::vector<Subject> Service::filter(const std::function<bool(const Subject& subject)>& condition) const {
@@ -145,6 +152,14 @@ std::map<string, DTO> Service::reportByType() const{
 	}
 
 	return result;
+}
+
+void Service::undo() {
+	if (this->undo_list.empty()) {
+		throw std::exception("Nothing to undo");
+	}
+	this->undo_list.back()->doUndo();
+	this->undo_list.pop_back();
 }
 
 void Service::printContract() const {

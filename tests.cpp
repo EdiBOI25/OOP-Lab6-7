@@ -276,5 +276,31 @@ void test_service() {
 	assert(sorted_array2.at(0).getName() == "s7");
 	assert(sorted_array2.at(3).getName() == "s2");
 
-	std::cout << service;
+	std::cout << service << '\n';
+	
+	Repository undo_repo{};
+	Service undo_serv{undo_repo};
+
+	try {
+		undo_serv.undo();
+	}
+	catch (const std::exception& e) {
+		assert(string(e.what()) == "Nothing to undo");
+	}
+
+	undo_serv.addSubject("name1", 10, "aa", "aa");
+	undo_serv.addSubject("name2", 10, "bb", "bb");
+	undo_serv.addSubject("name3", 10, "cc", "cc");
+	undo_serv.addSubject("name4", 10, "dd", "dd");
+	assert(undo_serv.size() == 4);
+	undo_serv.undo();
+	assert(undo_serv.size() == 3);
+	undo_serv.removeSubject(2);
+	assert(undo_serv.size() == 2);
+	undo_serv.undo();
+	assert(undo_serv.size() == 3);
+	undo_serv.updateSubject(0, "name10", 10, "aa", "aa");
+	assert(undo_serv.getAll()[0].getName() == "name10");
+	undo_serv.undo();
+	assert(undo_serv.getAll()[0].getName() == "name1");
 }

@@ -151,6 +151,7 @@
     <ClInclude Include="subject.h" />
     <ClInclude Include="tests.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="Undo.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="data.txt" />

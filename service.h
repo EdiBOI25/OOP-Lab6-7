@@ -4,6 +4,9 @@
 
 #include "repository.h"
 #include "Cart.h"
+#include "Undo.h"
+
+using std::unique_ptr;
 
 struct DTO {
 	string type{};
@@ -15,6 +18,7 @@ class Service {
 private:
 	Repository& repo;
 	Cart contract;
+	vector<unique_ptr<UndoAction>> undo_list;
 
 public:
 
@@ -116,6 +120,8 @@ public:
 	 * \return Subject type and their respective DTOs containing type and count
 	 */
 	std::map<string, DTO> reportByType() const;
+
+	void undo();
 
 	void printContract() const;
 };
