@@ -5,7 +5,7 @@
 #include <random>
 #include <chrono>
 
-Service::Service(Repository& r) : repo{ r }, undo_list{} {
+Service::Service(AbstractRepo& r) : repo{ r }, undo_list{} {
 	this->contract = Cart{};
 }
 
@@ -39,7 +39,8 @@ int Service::findSubject(const string& name, const int& hours, const string& typ
 
 void Service::removeSubject(const int& index) {
 	const Subject s = this->repo[index];
-	this->repo.remove(index);
+	// this->repo.remove(index);
+	this->repo.remove(s);
 
 	this->undo_list.push_back(std::make_unique<UndoRemove>(s, this->repo));
 }
@@ -49,7 +50,7 @@ void Service::updateSubject(const int& index, const string& name, const int& hou
 	if (this->repo.find(subject) != -1)
 		throw std::exception("Subject already exists");
 	const Subject old_subject = this->repo[index];
-	this->repo.update(index, subject);
+	this->repo.update(old_subject, subject);
 	this->undo_list.push_back(std::make_unique<UndoUpdate>(old_subject, subject, this->repo));
 }
 

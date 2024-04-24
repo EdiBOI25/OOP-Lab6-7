@@ -16,7 +16,8 @@ DTO operator++(DTO& dto);
 
 class Service {
 private:
-	Repository& repo;
+	// Repository& repo;
+	AbstractRepo& repo;
 	Cart contract;
 	vector<unique_ptr<UndoAction>> undo_list;
 
@@ -26,7 +27,7 @@ public:
 	 * \brief Service constructor
 	 * \param repo repository to hold elements
 	 */
-	Service(Repository& repo);
+	Service(AbstractRepo& repo);
 
 	virtual ~Service() = default;
 

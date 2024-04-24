@@ -11,9 +11,9 @@ public:
 class UndoAdd: public UndoAction {
 private:
 	Subject addedSubject;
-	Repository& repo;
+	AbstractRepo& repo;
 public:
-	UndoAdd(const Subject& s, Repository& r) : addedSubject{ s }, repo{ r } {}
+	UndoAdd(const Subject& s, AbstractRepo& r) : addedSubject{ s }, repo{ r } {}
 
 	void doUndo() override {
 		this->repo.remove(addedSubject);
@@ -23,9 +23,9 @@ public:
 class UndoRemove : public UndoAction {
 private:
 	Subject removedSubject;
-	Repository& repo;
+	AbstractRepo& repo;
 public:
-	UndoRemove(const Subject& s, Repository& r) : removedSubject{ s }, repo{ r } {}
+	UndoRemove(const Subject& s, AbstractRepo& r) : removedSubject{ s }, repo{ r } {}
 
 	void doUndo() override {
 		this->repo.add(removedSubject);
@@ -36,13 +36,13 @@ class UndoUpdate: public UndoAction {
 private:
 	Subject oldSubject;
 	Subject newSubject;
-	Repository& repo;
+	AbstractRepo& repo;
 
 public:
-	UndoUpdate(const Subject& old_s, const Subject& new_s, Repository& r) : oldSubject{old_s}, newSubject(new_s), repo{r}{}
+	UndoUpdate(const Subject& old_s, const Subject& new_s, AbstractRepo& r) : oldSubject{old_s}, newSubject(new_s), repo{r}{}
 
 	void doUndo() override {
-		const int index = this->repo.find(newSubject);
-		this->repo.update(index, oldSubject);
+		// const int index = this->repo.find(newSubject);
+		this->repo.update(newSubject, oldSubject);
 	}
 };

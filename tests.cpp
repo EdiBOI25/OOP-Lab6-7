@@ -111,12 +111,13 @@ void test_repository() {
 
 	Subject new_s = Subject("aaaa", 10, "aa", "asdasd");
 	try {
-		repo.update(100, new_s);
+		repo.update(new_s, new_s);
 	}
 	catch (const std::exception& e) {
 		assert(string(e.what()) == "Index out of range");
 	}
-	repo.update(0, new_s);
+	const Subject& ss = repo[0];
+	repo.update(ss, new_s);
 	assert(repo[0].getName() == "aaaa");
 
 	try {
@@ -165,10 +166,18 @@ void test_repository() {
 	assert(repo_file.size() == 3);
 	repo_file.add(Subject("bla", 1, "bla", "bla"));
 	assert(repo_file.size() == 4);
-	repo_file.update(1, Subject("ceva", 10, "bla", "bla"));
+	const auto cc = Subject("mate", 3, "optional", "alt nume");
+	repo_file.update(cc, Subject("ceva", 10, "bla", "bla"));
 	repo_file.remove(2);
 	repo_file.remove(Subject("ceva", 10, "bla", "bla"));
 	assert(repo_file.size() == 2);
+
+
+	RepoLab repoLab(0.5);
+	repoLab.add(Subject("math", 5, "compulsory", "some dude"));
+	repoLab.add(Subject("english", 3, "optional", "other dude"));
+	repoLab.add(Subject("physics", 4, "compulsory", "another dude"));
+	std::cout << "REPO LAB:\n" << repoLab << '\n';
 }
 
 void test_service() {
