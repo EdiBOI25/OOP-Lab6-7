@@ -171,13 +171,65 @@ void test_repository() {
 	repo_file.remove(2);
 	repo_file.remove(Subject("ceva", 10, "bla", "bla"));
 	assert(repo_file.size() == 2);
+}
 
+void test_repo_lab() {
+	RepoLab repo(0.5);
 
-	RepoLab repoLab(0.5);
-	repoLab.add(Subject("math", 5, "compulsory", "some dude"));
-	repoLab.add(Subject("english", 3, "optional", "other dude"));
-	repoLab.add(Subject("physics", 4, "compulsory", "another dude"));
-	std::cout << "REPO LAB:\n" << repoLab << '\n';
+	repo.add(Subject("math", 5, "compulsory", "some dude"));
+	repo.add(Subject("english", 3, "optional", "other dude"));
+	repo.add(Subject("physics", 4, "compulsory", "another dude"));
+
+	assert(repo.size() == 3);
+
+	const std::vector<Subject> subjects = repo.getAll();
+	std::cout << subjects.at(0);
+	assert(subjects.at(0).getName() == "math");
+
+	Element ceva = repo[1];
+	assert(ceva.getHours() == 3);
+
+	assert(repo.find(ceva) == 1);
+	assert(repo.find(Subject("aksjdh", 10, "kasjdh", "sjhrgb")) == -1);
+
+	Subject new_s = Subject("aaaa", 10, "aa", "asdasd");
+	try {
+		repo.update(new_s, new_s);
+	}
+	catch (const std::exception& e) {
+		assert(string(e.what()) == "Element not found");
+	}
+	const Subject& ss = repo[0];
+	repo.update(ss, new_s);
+	assert(repo[0].getName() == "aaaa");
+
+	try {
+		repo.remove(10);
+	}
+	catch (const std::exception& e) {
+		assert(string(e.what()) == "Index out of range");
+	}
+	assert(repo.size() == 3);
+	try {
+		repo.remove(Subject("surjfskjrf", 50, "sjfh", "ksjdfh"));
+	}
+	catch (const std::exception& e) {
+		assert(string(e.what()) == "Couldn't find element to remove");
+	}
+	assert(repo.size() == 3);
+	repo.remove(ceva);
+	assert(repo.size() == 2);
+	repo.remove(2);
+	assert(repo.size() == 1);
+
+	try {
+		repo[1000];
+	}
+	catch (const std::exception& e) {
+		assert(string(e.what()) == "Index out of range");
+	}
+
+	std::cout << repo << '\n';
 }
 
 void test_service() {

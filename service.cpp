@@ -15,7 +15,7 @@ DTO operator++(DTO& dto) {
 	return dto;
 }
 
-const std::vector<Subject>& Service::getAll() const noexcept{
+const std::vector<Subject> Service::getAll() const noexcept{
 	return this->repo.getAll();
 }
 
@@ -61,7 +61,8 @@ std::vector<Subject> Service::filter(const std::function<bool(const Subject& sub
 			result.push_back(this->repo[i]);
 		}
 	}*/
-	std::copy_if(this->repo.getAll().begin(), this->repo.getAll().end(), std::back_inserter(result), condition);
+	auto all = this->repo.getAll();
+	std::copy_if(all.begin(), all.end(), std::back_inserter(result), condition);
 	return result;
 }
 

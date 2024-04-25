@@ -17,10 +17,12 @@ int main()
         test_cart();
         //test_dynamic_array();
         test_repository();
+        test_repo_lab();
         test_service();
 
         system("cls");
-		RepoWithFile repo("data.txt");
+		//RepoWithFile repo("data.txt");
+        RepoLab repo(0.5);
 		Service serv(repo);
         UI ui(serv);
         ui.run();

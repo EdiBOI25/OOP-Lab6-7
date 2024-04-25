@@ -35,7 +35,7 @@ public:
 	 * \brief Returns all elements in list
 	 * \return list of elements
 	 */
-	const std::vector<Subject>& getAll() const noexcept;
+	const std::vector<Subject> getAll() const noexcept;
 
 	/**
 	 * \brief Adds a subject to the list
