@@ -175,9 +175,27 @@ void test_repository() {
 
 void test_repo_lab() {
 	RepoLab repo(0.5);
-
+	srand(3);
 	repo.add(Subject("math", 5, "compulsory", "some dude"));
 	repo.add(Subject("english", 3, "optional", "other dude"));
+	try {
+		repo.add(Subject("physics", 4, "compulsory", "another dude"));
+	}
+	catch(std::exception& e) {
+		assert(string(e.what()) == "Generated number is lower than given probability");
+	}
+	try {
+		repo.add(Subject("physics", 4, "compulsory", "another dude"));
+	}
+	catch (std::exception& e) {
+		assert(string(e.what()) == "Generated number is lower than given probability");
+	}
+	try {
+		repo.add(Subject("physics", 4, "compulsory", "another dude"));
+	}
+	catch (std::exception& e) {
+		assert(string(e.what()) == "Generated number is lower than given probability");
+	}
 	repo.add(Subject("physics", 4, "compulsory", "another dude"));
 
 	assert(repo.size() == 3);
@@ -200,6 +218,18 @@ void test_repo_lab() {
 		assert(string(e.what()) == "Element not found");
 	}
 	const Subject& ss = repo[0];
+	try {
+		repo.update(ss, new_s);
+	}
+	catch (std::exception& e) {
+		assert(string(e.what()) == "Generated number is lower than given probability");
+	}
+	try {
+		repo.update(ss, new_s);
+	}
+	catch (std::exception& e) {
+		assert(string(e.what()) == "Generated number is lower than given probability");
+	}
 	repo.update(ss, new_s);
 	assert(repo[0].getName() == "aaaa");
 
@@ -230,6 +260,8 @@ void test_repo_lab() {
 	}
 
 	std::cout << repo << '\n';
+
+	srand(static_cast<unsigned int>(time(nullptr)));
 }
 
 void test_service() {

@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include <algorithm>
 #include <iostream>
+#include <random>
+#include <cstdlib>
 #include <vector>
 #include "DynamicArray.h"
 #include "subject.h"
@@ -247,6 +249,11 @@ public:
 	 * \param element the element to be added
 	 */
 	void add(const Element& element) override {
+		const double random_num = rand() % 10 / static_cast<double>(10);
+		if (random_num < this->probability) {
+			throw std::exception("Generated number is lower than given probability");
+		}
+
 		//this->list.push_back(element);
 		const int s = static_cast<int>(this->size());
 		this->list[s] = element;
@@ -282,6 +289,12 @@ public:
 		if (index == -1) {
 			throw std::exception("Couldn't find element to remove");
 		}
+
+		const double random_num = rand() % 10 / static_cast<double>(10);
+		if (random_num < this->probability) {
+			throw std::exception("Generated number is lower than given probability");
+		}
+
 		this->list.erase(index);
 	}
 
@@ -294,6 +307,12 @@ public:
 		if (this->list.find(i) == this->list.end()) {
 			throw std::out_of_range("Index out of range");
 		}
+
+		const double random_num = rand() % 10 / static_cast<double>(10);
+		if (random_num < this->probability) {
+			throw std::exception("Generated number is lower than given probability");
+		}
+
 		this->list.erase(i);
 	}
 
@@ -308,6 +327,12 @@ public:
 		if (index < 0) {
 			throw std::out_of_range("Element not found");
 		}
+
+		const double random_num = rand() % 10 / static_cast<double>(10);
+		if (random_num < this->probability) {
+			throw std::exception("Generated number is lower than given probability");
+		}
+
 		this->list[index] = element;
 	}
 
